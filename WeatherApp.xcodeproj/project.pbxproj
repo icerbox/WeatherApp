@@ -64,12 +64,9 @@
 		D0A253B329DBB7E100A1E135 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				D0FEA51729DD33FD00F2F521 /* ViewControllers */,
 				D0FEA51429DC69AC00F2F521 /* Model */,
 				D0A253B429DBB7E100A1E135 /* AppDelegate.swift */,
-				D0FEA51029DBD71200F2F521 /* AuthViewController.swift */,
-				D0A253B829DBB7E100A1E135 /* RootViewController.swift */,
-				D0FEA50C29DBC8DE00F2F521 /* CitiesListTableViewCell.swift */,
-				D0FEA50A29DBC4C000F2F521 /* AddCityViewController.swift */,
 				D0A253BD29DBB7E400A1E135 /* Assets.xcassets */,
 				D0A253BF29DBB7E400A1E135 /* LaunchScreen.storyboard */,
 				D0A253C229DBB7E400A1E135 /* Info.plist */,
@@ -83,8 +80,19 @@
 				D0FEA51529DC719600F2F521 /* WeatherData.swift */,
 				D0FEA50E29DBCA4A00F2F521 /* ApiResponse.swift */,
 				D0FEA51229DC679900F2F521 /* Service.swift */,
+				D0FEA50C29DBC8DE00F2F521 /* CitiesListTableViewCell.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		D0FEA51729DD33FD00F2F521 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D0FEA51029DBD71200F2F521 /* AuthViewController.swift */,
+				D0A253B829DBB7E100A1E135 /* RootViewController.swift */,
+				D0FEA50A29DBC4C000F2F521 /* AddCityViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

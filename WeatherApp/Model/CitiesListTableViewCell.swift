@@ -8,35 +8,39 @@
 import UIKit
 
 final class CitiesListTableViewCell: UITableViewCell {
-    static let identifier = "CitiesTableViewCell"
     
+    static let identifier = "CitiesListTableViewCell"
+    // Лейбл для названия города
     private lazy var cityName: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textAlignment = .center
         return label
     }()
-    
+    // Лейбл для погодных условий
     private lazy var weatherCondition: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textAlignment = .center
         return label
     }()
-    
+    // Лейбл для текущей температуры
     private lazy var weatherTemperature: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textAlignment = .center
         return label
     }()
     
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.backgroundColor = .systemGreen
+//        stackView.backgroundColor = .systemGreen
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.alignment = .center
@@ -54,6 +58,7 @@ final class CitiesListTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(stackView)
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {

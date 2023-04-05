@@ -20,13 +20,11 @@ class RootViewController: UIViewController, UINavigationControllerDelegate {
     private var isFirst = true
     // Переменная для json данных
     private var weatherData: ApiResponse?
-    private let citiesCellIdentifier = "CitiesTableViewCell"
+    private let citiesCellIdentifier = "CitiesListTableViewCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        service.getCityCoordinates(city: "Якутск", completion: { (coordinate, error) in
-//            print("Координаты города: \(String(describing: coordinate))")
-//        })
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewCity))
         
         if citiesArray.isEmpty {
@@ -55,6 +53,9 @@ class RootViewController: UIViewController, UINavigationControllerDelegate {
         service.getCityWeather(citiesArray: self.citiesNameArray) { (index, weather) in
             citiesArray[index] = weather
             citiesArray[index].name = self.citiesNameArray[index]
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
             print(citiesArray)
         }
     }
@@ -63,7 +64,7 @@ class RootViewController: UIViewController, UINavigationControllerDelegate {
     func setupViews() {
         title = "Список городов"
         tableView.dataSource = self
-        tableView.register(CitiesListTableViewCell.self, forCellReuseIdentifier: "citiesCellIdentifier")
+        tableView.register(CitiesListTableViewCell.self, forCellReuseIdentifier: citiesCellIdentifier)
         tableView.backgroundColor = .yellow
         tableView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,13 +82,15 @@ class RootViewController: UIViewController, UINavigationControllerDelegate {
 
 extension RootViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return citiesArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: citiesCellIdentifier, for: indexPath)
-//        guard let citiesForecast = WeatherData(apiResponse: ) >
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: citiesCellIdentifier, for: indexPath) as! CitiesListTableViewCell
+        var weather = WeatherData()
+        weather = citiesArray[indexPath.row]
+        cell.configure(weather)
+        return cell
     }
 }
 
