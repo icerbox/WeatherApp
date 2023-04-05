@@ -9,25 +9,56 @@ import UIKit
 
 class RootViewController: UIViewController, UINavigationControllerDelegate {
     
+    let defaultCity = WeatherData()
+    
+    // Массив который содержит имена городов
+    let citiesNameArray = ["Якутск", "Москва", "Санкт-Петербург"]
+    
     private let service = Service()
-    
     private let tableView = UITableView()
-    
+    // Был ли это первый запуск приложения. После первого запуска во ViewDidAppear меняем на false
+    private var isFirst = true
+    // Переменная для json данных
     private var weatherData: ApiResponse?
     private let citiesCellIdentifier = "CitiesTableViewCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        service.getCityCoordinates(city: "Якутск", completion: { (coordinate, error) in
+//            print("Координаты города: \(String(describing: coordinate))")
+//        })
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewCity))
-        service.updateData()
+        
+        if citiesArray.isEmpty {
+            citiesArray = Array(repeating: defaultCity, count: citiesNameArray.count)
+        }
+        addCities()
+        
         setupViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Если это первый запуск, то обновляем данные о погоде
+        if isFirst {
+//            service.updateData()
+        }
+        isFirst = false
     }
     
     @objc func addNewCity() {
         let addCityViewController = AddCityViewController()
         present(addCityViewController, animated: true)
     }
+    
+    func addCities() {
+        service.getCityWeather(citiesArray: self.citiesNameArray) { (index, weather) in
+            citiesArray[index] = weather
+            citiesArray[index].name = self.citiesNameArray[index]
+            print(citiesArray)
+        }
+    }
+    
 
     func setupViews() {
         title = "Список городов"
@@ -50,11 +81,12 @@ class RootViewController: UIViewController, UINavigationControllerDelegate {
 
 extension RootViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //
+//        let cell = tableView.dequeueReusableCell(withIdentifier: citiesCellIdentifier, for: indexPath)
+//        guard let citiesForecast = WeatherData(apiResponse: ) >
         return UITableViewCell()
     }
 }

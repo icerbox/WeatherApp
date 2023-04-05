@@ -8,12 +8,11 @@
 import Foundation
 import UIKit
 
+// Структура в которую приходят данные из json
 struct ApiResponse: Codable {
-
     var info: Info
     var fact: Fact
     var forecasts: [Forecasts]
-
 }
 
 struct Info: Codable {
@@ -51,16 +50,3 @@ struct Day: Codable {
         case tempMax = "temp_max"
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

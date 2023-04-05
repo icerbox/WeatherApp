@@ -7,14 +7,15 @@
 
 import Foundation
 
+// Структура в которой собираются данные из json данных которые поступили в ApiResponse
 struct WeatherData {
     var name: String = "Название"
-    var temperature: Int
-    var conditionCode: String
-    var url: String
-    var condition: String
-    var pressureMm: Int
-    var windSpeed: Double
+    var temperature: Int = 0
+    var conditionCode: String = ""
+    var url: String = ""
+    var condition: String = ""
+    var pressureMm: Int = 0
+    var windSpeed: Double = 0
     var tempMin: Int = 0
     var tempMax: Int = 0
     
@@ -52,4 +53,12 @@ struct WeatherData {
         tempMin = apiResponse.forecasts.first!.parts.day.tempMin!
         tempMax = apiResponse.forecasts.first!.parts.day.tempMax!
     }
+    
+    init() {
+        
+    }
 }
+
+
+// Массив который содержит все города
+var citiesArray = [WeatherData]()

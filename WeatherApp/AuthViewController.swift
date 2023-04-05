@@ -9,7 +9,7 @@ import Foundation
 import WebKit
 
 protocol AuthViewControllerDelegate: AnyObject {
-  // Передаем полученный токен
+  // Получаем токен
   func handleTokenChanged(token: String)
 }
 
@@ -56,7 +56,7 @@ final class AuthViewController: UIViewController {
 extension AuthViewController: WKNavigationDelegate {
   func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
-    if let url = navigationAction.request.url, url.scheme == scheme { // если соответствет схеме "myphotos"
+    if let url = navigationAction.request.url {
       let targetString = url.absoluteString.replacingOccurrences(of: "#", with: "?")
       guard let components = URLComponents(string: targetString) else { return }
 
