@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D011949729DEB674003646E4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011949629DEB674003646E4 /* DetailViewController.swift */; };
+		D011949929DEB7E0003646E4 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011949829DEB7E0003646E4 /* DetailTableViewCell.swift */; };
 		D0A253B529DBB7E100A1E135 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A253B429DBB7E100A1E135 /* AppDelegate.swift */; };
 		D0A253B929DBB7E100A1E135 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A253B829DBB7E100A1E135 /* RootViewController.swift */; };
 		D0A253BE29DBB7E400A1E135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0A253BD29DBB7E400A1E135 /* Assets.xcassets */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D011949629DEB674003646E4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		D011949829DEB7E0003646E4 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		D0A253B129DBB7E100A1E135 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0A253B429DBB7E100A1E135 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D0A253B829DBB7E100A1E135 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -81,6 +85,7 @@
 				D0FEA50E29DBCA4A00F2F521 /* ApiResponse.swift */,
 				D0FEA51229DC679900F2F521 /* Service.swift */,
 				D0FEA50C29DBC8DE00F2F521 /* CitiesListTableViewCell.swift */,
+				D011949829DEB7E0003646E4 /* DetailTableViewCell.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -91,6 +96,7 @@
 				D0FEA51029DBD71200F2F521 /* AuthViewController.swift */,
 				D0A253B829DBB7E100A1E135 /* RootViewController.swift */,
 				D0FEA50A29DBC4C000F2F521 /* AddCityViewController.swift */,
+				D011949629DEB674003646E4 /* DetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -165,6 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D011949729DEB674003646E4 /* DetailViewController.swift in Sources */,
 				D0A253B929DBB7E100A1E135 /* RootViewController.swift in Sources */,
 				D0FEA51329DC679900F2F521 /* Service.swift in Sources */,
 				D0FEA50D29DBC8DE00F2F521 /* CitiesListTableViewCell.swift in Sources */,
@@ -172,6 +179,7 @@
 				D0FEA50F29DBCA4A00F2F521 /* ApiResponse.swift in Sources */,
 				D0FEA51129DBD71300F2F521 /* AuthViewController.swift in Sources */,
 				D0FEA51629DC719600F2F521 /* WeatherData.swift in Sources */,
+				D011949929DEB7E0003646E4 /* DetailTableViewCell.swift in Sources */,
 				D0A253B529DBB7E100A1E135 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

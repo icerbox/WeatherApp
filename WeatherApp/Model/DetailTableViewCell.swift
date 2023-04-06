@@ -1,15 +1,15 @@
 //
-//  FileTableViewCell.swift
+//  DetailTableViewCell.swift
 //  WeatherApp
 //
-//  Created by Айсен Еремеев on 04.04.2023.
+//  Created by Айсен Еремеев on 06.04.2023.
 //
 
 import UIKit
 
-final class CitiesListTableViewCell: UITableViewCell {
+final class DetailTableViewCell: UITableViewCell {
     
-    static let identifier = "CitiesListTableViewCell"
+    static let identifier = "DetailTableViewCell"
     // Лейбл для названия города
     private lazy var cityName: UILabel = {
        let label = UILabel()
@@ -40,9 +40,9 @@ final class CitiesListTableViewCell: UITableViewCell {
     
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
-//        stackView.backgroundColor = .systemGreen
+//        stackView.backgroundColor = .systemGray
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
+        stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 5
         stackView.contentMode = .scaleAspectFill

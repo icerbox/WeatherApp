@@ -7,12 +7,27 @@
 
 import UIKit
 
-class RootViewController: UIViewController, UINavigationControllerDelegate {
+class RootViewController: UIViewController, UINavigationControllerDelegate, AddCityViewControllerDelegate {
+    
+    func addCityViewControllerDidCancel(_ controller: AddCityViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func addCityViewController(_ controller: AddCityViewController, didFinishAdding item: String) {
+        let newRowIndex = citiesNameArray.count
+        citiesNameArray.append(item)
+        citiesNameArray.forEach {
+            print("Город: \($0)")
+        }
+        print("Добавлен \(item)")
+        addCities()
+    }
+    
     
     let defaultCity = WeatherData()
     
     // Массив который содержит имена городов
-    let citiesNameArray = ["Якутск", "Москва", "Санкт-Петербург"]
+    var citiesNameArray = ["Якутск", "Москва", "Санкт-Петербург"]
     
     private let service = Service()
     private let tableView = UITableView()
@@ -21,7 +36,7 @@ class RootViewController: UIViewController, UINavigationControllerDelegate {
     // Переменная для json данных
     private var weatherData: ApiResponse?
     private let citiesCellIdentifier = "CitiesListTableViewCell"
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,17 +61,19 @@ class RootViewController: UIViewController, UINavigationControllerDelegate {
     
     @objc func addNewCity() {
         let addCityViewController = AddCityViewController()
-        present(addCityViewController, animated: true)
+        addCityViewController.delegate = self
+        self.show(addCityViewController, sender: self)
     }
     
     func addCities() {
         service.getCityWeather(citiesArray: self.citiesNameArray) { (index, weather) in
+            print("weather: \(weather)")
             citiesArray[index] = weather
             citiesArray[index].name = self.citiesNameArray[index]
             DispatchQueue.main.async {
+                print("Обновляем страницу")
                 self.tableView.reloadData()
             }
-            print(citiesArray)
         }
     }
     
@@ -64,6 +81,7 @@ class RootViewController: UIViewController, UINavigationControllerDelegate {
     func setupViews() {
         title = "Список городов"
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(CitiesListTableViewCell.self, forCellReuseIdentifier: citiesCellIdentifier)
         tableView.backgroundColor = .yellow
         tableView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
@@ -91,6 +109,34 @@ extension RootViewController: UITableViewDataSource {
         weather = citiesArray[indexPath.row]
         cell.configure(weather)
         return cell
+    }
+}
+
+extension RootViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") {
+            (contextualAction: UIContextualAction, swipeButton: UIView, completionHandler: (Bool) -> Void) in
+            citiesArray.remove(at: indexPath.row)
+            print("Удаляем строку")
+            let indexPaths = [indexPath]
+            tableView.deleteRows(at: indexPaths, with: .automatic)
+            completionHandler(true)
+        }
+        
+//        let editAction = UIContextualAction(style: .normal, title: "Редактировать") {
+//            (contextualAction: UIContextualAction, swipeButton: UIView, completionHandler: (Bool) -> Void) in
+//            let editViewController = AddCityViewController()
+//            editViewController.delegate = self
+//            self.show(editViewController, sender: self)
+//        }
+        let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
+        return swipeActions
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailViewController = DetailViewController()
+        detailViewController.selectedCity = citiesArray[indexPath.row]
+        show(detailViewController, sender: self)
     }
 }
 

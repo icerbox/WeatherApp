@@ -53,10 +53,10 @@ final class Service {
         ]
         // Если ссылка сформирована продолжаем
         guard let url = components?.url else { return }
-            print("Сформирована ссылка \(url)")
+//            print("Сформирована ссылка \(url)")
         // Формируем запрос из ссылки
         var request = URLRequest(url: url)
-            print("Запрос \(request)")
+//            print("Запрос \(request)")
         // В соответствии с документацией Яндекс API добавляем к токену значение для хидера
         request.setValue("\(token)", forHTTPHeaderField: "X-Yandex-API-Key")
         // Создаем таску
