@@ -40,7 +40,6 @@ final class CitiesListTableViewCell: UITableViewCell {
     
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
-//        stackView.backgroundColor = .systemGreen
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.alignment = .center
@@ -68,7 +67,7 @@ final class CitiesListTableViewCell: UITableViewCell {
     func configure(_ viewModel: WeatherData) {
         cityName.text = viewModel.name
         weatherCondition.text = viewModel.conditionString
-        weatherTemperature.text = "\(String(describing: viewModel.temperature))"
+        weatherTemperature.text = "\(String(describing: viewModel.temperatureString))"
     }
     
     private func setupConstraints() {

@@ -14,12 +14,8 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
     }
     
     func addCityViewController(_ controller: AddCityViewController, didFinishAdding item: String) {
-        let newRowIndex = citiesNameArray.count
         citiesNameArray.append(item)
-        citiesNameArray.forEach {
-            print("Город: \($0)")
-        }
-        print("Добавлен \(item)")
+        citiesArray.append(defaultCity)
         addCities()
     }
     
@@ -40,7 +36,7 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewCity))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewCity))
         
         if citiesArray.isEmpty {
             citiesArray = Array(repeating: defaultCity, count: citiesNameArray.count)
@@ -62,7 +58,7 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
     @objc func addNewCity() {
         let addCityViewController = AddCityViewController()
         addCityViewController.delegate = self
-        self.show(addCityViewController, sender: self)
+        show(addCityViewController, sender: self)
     }
     
     func addCities() {
@@ -83,7 +79,6 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(CitiesListTableViewCell.self, forCellReuseIdentifier: citiesCellIdentifier)
-        tableView.backgroundColor = .yellow
         tableView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
@@ -122,19 +117,14 @@ extension RootViewController: UITableViewDelegate {
             tableView.deleteRows(at: indexPaths, with: .automatic)
             completionHandler(true)
         }
-        
-//        let editAction = UIContextualAction(style: .normal, title: "Редактировать") {
-//            (contextualAction: UIContextualAction, swipeButton: UIView, completionHandler: (Bool) -> Void) in
-//            let editViewController = AddCityViewController()
-//            editViewController.delegate = self
-//            self.show(editViewController, sender: self)
-//        }
         let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
         return swipeActions
     }
-    
+    // При клике на ячейку:
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Создаем экземпляр детального вьюконтроллера
         let detailViewController = DetailViewController()
+        
         detailViewController.selectedCity = citiesArray[indexPath.row]
         show(detailViewController, sender: self)
     }

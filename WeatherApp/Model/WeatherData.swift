@@ -10,12 +10,15 @@ import Foundation
 // Структура в которой собираются данные из json данных которые поступили в ApiResponse
 struct WeatherData {
     var name: String = "Название"
-    var temperature: Int = 0
+    var temperature: Double = 0.0
+    var temperatureString: String {
+        return String(format: "%.0f", temperature)
+    }
     var conditionCode: String = ""
     var url: String = ""
     var condition: String = ""
     var pressureMm: Int = 0
-    var windSpeed: Double = 0
+    var windSpeed: Double = 0.0
     var tempMin: Int = 0
     var tempMax: Int = 0
     

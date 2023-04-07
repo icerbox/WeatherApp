@@ -18,7 +18,6 @@ class AddCityViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.backgroundColor = .green
         setupViews()
         setupConstraints()
     }
@@ -26,7 +25,7 @@ class AddCityViewController: UIViewController {
     private lazy var doneButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .gray
+        button.backgroundColor = .systemBlue
         button.setTitle("Сохранить", for: .normal)
         button.addTarget(self, action: #selector(done), for: .touchUpInside)
         return button
@@ -35,7 +34,7 @@ class AddCityViewController: UIViewController {
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .gray
+        button.backgroundColor = .systemBlue
         button.setTitle("Отменить", for: .normal)
         button.addTarget(self, action: #selector(cancel), for: .touchUpInside)
         return button

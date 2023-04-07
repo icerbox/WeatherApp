@@ -9,6 +9,7 @@ import UIKit
 
 class DetailViewController: UIViewController,  UINavigationControllerDelegate {
     
+    // Переменная куда будут передаваться данные кликнутой ячейки
     var selectedCity: WeatherData?
     
     private let tableView = UITableView()
@@ -17,10 +18,7 @@ class DetailViewController: UIViewController,  UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-    }
-    
-    func refreshLabels() {
-        
+        setupConstraints()
     }
     
     func setupViews() {
@@ -31,13 +29,15 @@ class DetailViewController: UIViewController,  UINavigationControllerDelegate {
         tableView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
+    }
+    
+    func setupConstraints() {
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-        
     }
 }
 
@@ -50,6 +50,7 @@ extension DetailViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: detailCellIdentifier, for: indexPath) as! DetailTableViewCell
         // Если кликнутый город имеет значение, продолжаем
         guard let currentCity = selectedCity else { return UITableViewCell() }
+        // Вызываем метод configure из кастомной ячейки DetailTableViewCell
         cell.configure(currentCity)
         return cell
     }

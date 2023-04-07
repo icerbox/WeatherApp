@@ -20,7 +20,7 @@ struct Info: Codable {
 }
 
 struct Fact: Codable {
-    var temp: Int
+    var temp: Double
     var icon: String
     var condition: String
     var windSpeed: Double
