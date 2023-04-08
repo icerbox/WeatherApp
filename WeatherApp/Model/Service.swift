@@ -29,21 +29,24 @@ final class Service {
             })
         }
     }
-    
+    // Метод который при помощи CoreLocation, получает долготу и широту по названию города из переменной city
     func getCityCoordinates(city: String, completion: @escaping(_ coordinate: CLLocationCoordinate2D?, _ error: Error?) -> ()) {
         CLGeocoder().geocodeAddressString(city) { (placemark, error) in
             completion(placemark?.first?.location?.coordinate, error)
         }
     }
+    
     // Метод который авторизуется в API Яндекс погоды используя token и в соответствии с полученными данными забирает данные с json в модель данных WeatherData
     func updateData(latitude: Double, longitude: Double, completionHandler: @escaping (WeatherData) -> Void) {
         // Если токен не пустой то продолжаем
         guard !token.isEmpty else {
-          let requestTokenViewController = AuthViewController()
-          requestTokenViewController.delegate = self
-          requestTokenViewController.modalPresentationStyle = .fullScreen
+            // Создаем экземпляр AuthViewController()
+            let requestTokenViewController = AuthViewController()
+            requestTokenViewController.delegate = self
+            requestTokenViewController.modalPresentationStyle = .fullScreen
+            // Презентим вьюконтроллер для OAuth авторизации
             delegate?.present(requestTokenViewController, animated: false, completion: nil)
-          return
+            return
         }
         // Собираем строку для ссылки
         var components = URLComponents(string: "https://api.weather.yandex.ru/v2/forecast")
@@ -54,10 +57,8 @@ final class Service {
         ]
         // Если ссылка сформирована продолжаем
         guard let url = components?.url else { return }
-//            print("Сформирована ссылка \(url)")
         // Формируем запрос из ссылки
         var request = URLRequest(url: url)
-//            print("Запрос \(request)")
         // В соответствии с документацией Яндекс API добавляем к токену значение для хидера
         request.setValue("\(token)", forHTTPHeaderField: "X-Yandex-API-Key")
         // Создаем таску

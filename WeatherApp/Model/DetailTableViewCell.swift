@@ -13,7 +13,6 @@ final class DetailTableViewCell: UITableViewCell {
     static let identifier = "DetailTableViewCell"
     
     // Имэджвью для вывода иконки
-    
     lazy var conditionIcon = {
         var image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -23,89 +22,139 @@ final class DetailTableViewCell: UITableViewCell {
     
     // Лейбл для названия города
     private lazy var cityName: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont(name: "Helvetica", size: 30)
         label.textAlignment = .center
         return label
     }()
     
     // Лейбл для погодных условий
     private lazy var weatherCondition: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont(name: "Helvetica", size: 24)
         label.textAlignment = .center
         return label
     }()
     
     // Лейбл для текущей температуры
     private lazy var weatherTemperature: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont(name: "Helvetica-bold", size: 60)
         label.textAlignment = .center
         return label
     }()
     
     // Лейбл для давления воздуха
     private lazy var weatherPressure: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont(name: "Helvetica", size: 24)
         label.textAlignment = .center
         return label
     }()
     
     // Лейбл для скорости ветра
     private lazy var windSpeed: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont(name: "Helvetica", size: 24)
         label.textAlignment = .center
         return label
     }()
     
     // Лейбл для минимальной температуры
     private lazy var minTemp: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont(name: "Helvetica", size: 24)
         label.textAlignment = .center
         return label
     }()
     
     // Лейбл для максимальной температуры
     private lazy var maxTemp: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont(name: "Helvetica", size: 24)
         label.textAlignment = .center
         return label
     }()
     
-    private lazy var stackView: UIStackView = {
+    private lazy var upperStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+//        stackView.backgroundColor = .yellow
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 5
+        stackView.contentMode = .scaleAspectFill
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
+        stackView.addArrangedSubview(cityName)
+        return stackView
+    }()
+    
+    private lazy var middleStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 5
+        stackView.contentMode = .scaleAspectFill
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
+        stackView.addArrangedSubview(conditionIcon)
+        stackView.addArrangedSubview(middleRightStackView)
+        return stackView
+    }()
+    
+    private lazy var middleRightStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 5
         stackView.contentMode = .scaleAspectFill
-//        stackView.distribution = .fillEqually
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
-//        stackView.addArrangedSubview(iconView)
-        stackView.addArrangedSubview(conditionIcon)
-        stackView.addArrangedSubview(cityName)
-        stackView.addArrangedSubview(weatherCondition)
         stackView.addArrangedSubview(weatherTemperature)
+        stackView.addArrangedSubview(weatherCondition)
+        return stackView
+    }()
+    
+    private lazy var bottomStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 5
+        stackView.contentMode = .scaleAspectFill
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         stackView.addArrangedSubview(weatherPressure)
         stackView.addArrangedSubview(windSpeed)
         stackView.addArrangedSubview(minTemp)
@@ -115,7 +164,9 @@ final class DetailTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(stackView)
+        contentView.addSubview(upperStackView)
+        contentView.addSubview(middleStackView)
+        contentView.addSubview(bottomStackView)
         setupConstraints()
     }
     
@@ -124,32 +175,6 @@ final class DetailTableViewCell: UITableViewCell {
     }
     
     typealias Completion = (Result<UIImage, Error>) -> Void
-    
-    func loadIcon(_ viewModel: WeatherData, completion: @escaping Completion) {
-        let url = URL(string: "https://yastatic.net/weather/i/icons/funky/dark/\(viewModel.conditionCode).svg")
-        guard let url = url else { return }
-            let urlRequest = URLRequest(url: url)
-            let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
-                if let error = error {
-                    completion(.failure(error))
-                }
-                guard let response = response as? HTTPURLResponse else {
-                    completion(.failure(URLError(.badServerResponse)))
-                    return
-                }
-                guard response.statusCode == 200 else {
-                    completion(.failure(URLError(.badServerResponse)))
-                    return
-                }
-                guard let data = data, let image = UIImage(data: data) else {
-                    completion(.failure(URLError(.cannotDecodeContentData)))
-                    return
-                }
-                completion(.success(image))
-            }
-        )
-        task.resume()
-    }
     
     func configure(_ viewModel: WeatherData) {
         // Добавляем переменную которая будет хранить полученную иконку
@@ -178,24 +203,25 @@ final class DetailTableViewCell: UITableViewCell {
         maxTemp.text = "\(String(describing: viewModel.tempMax))"
     }
     
+    // Устанавливаем констрейнты
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            upperStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            upperStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            upperStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            upperStackView.heightAnchor.constraint(equalToConstant: 100),
+            middleStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            middleStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            middleStackView.topAnchor.constraint(equalTo: upperStackView.bottomAnchor),
+            middleStackView.heightAnchor.constraint(equalToConstant: 200),
+            bottomStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            bottomStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            bottomStackView.topAnchor.constraint(equalTo: middleStackView.bottomAnchor),
+            bottomStackView.heightAnchor.constraint(equalToConstant: 300),
             conditionIcon.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.3),
             conditionIcon.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.3),
-            conditionIcon.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+//            conditionIcon.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
         ])
     }
 }
-
-
-
-
-
-
-
-
-

@@ -1,5 +1,5 @@
 //
-//  FileTableViewCell.swift
+//  CitiesListTableViewCell.swift
 //  WeatherApp
 //
 //  Created by Айсен Еремеев on 04.04.2023.
@@ -10,34 +10,43 @@ import UIKit
 final class CitiesListTableViewCell: UITableViewCell {
     
     static let identifier = "CitiesListTableViewCell"
+    
     // Лейбл для названия города
     private lazy var cityName: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont(name: "Helvetica", size: 20)
         label.textAlignment = .center
         return label
     }()
+    
     // Лейбл для погодных условий
     private lazy var weatherCondition: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textColor = .white
         label.textAlignment = .center
         return label
     }()
+    
     // Лейбл для текущей температуры
     private lazy var weatherTemperature: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont(name: "Helvetica-Bold", size: 30)
         label.textAlignment = .center
         return label
     }()
     
+    // Стеквью для всех полей
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,30 +69,25 @@ final class CitiesListTableViewCell: UITableViewCell {
         setupConstraints()
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // Метод для сборки данных из вьюмодели
     func configure(_ viewModel: WeatherData) {
         cityName.text = viewModel.name
         weatherCondition.text = viewModel.conditionString
         weatherTemperature.text = "\(String(describing: viewModel.temperatureString))"
     }
-    
+        
+    // Устанавливаем констрейнты
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
+    
 }
-
-
-
-
-
-
-
-

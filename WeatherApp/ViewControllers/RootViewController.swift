@@ -19,7 +19,6 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
         addCities()
     }
     
-    
     let defaultCity = WeatherData()
     
     // Массив который содержит имена городов
@@ -27,6 +26,7 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
     
     private let service = Service()
     private let tableView = UITableView()
+    
     // Был ли это первый запуск приложения. После первого запуска во ViewDidAppear меняем на false
     private var isFirst = true
     // Переменная для json данных
@@ -37,13 +37,13 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewCity))
-        
+        // Если массив citiesArray пустой, то заполняем пустыми значениями в соответствии с количеством элементов в citiesNameArray
         if citiesArray.isEmpty {
             citiesArray = Array(repeating: defaultCity, count: citiesNameArray.count)
         }
         addCities()
-        
         setupViews()
+        setupConstraints()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -54,7 +54,7 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
         }
         isFirst = false
     }
-    
+    // Метод который вызывается при нажатии на кнопку "+" для добавления нового города в главный список
     @objc func addNewCity() {
         let addCityViewController = AddCityViewController()
         addCityViewController.delegate = self
@@ -63,32 +63,33 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
     
     func addCities() {
         service.getCityWeather(citiesArray: self.citiesNameArray) { (index, weather) in
-            print("weather: \(weather)")
             citiesArray[index] = weather
             citiesArray[index].name = self.citiesNameArray[index]
             DispatchQueue.main.async {
-                print("Обновляем страницу")
                 self.tableView.reloadData()
             }
         }
     }
     
-
     func setupViews() {
-        title = "Список городов"
+        title = "Прогноз погоды"
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(CitiesListTableViewCell.self, forCellReuseIdentifier: citiesCellIdentifier)
         tableView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+//        tableView.rowHeight = UITableView.automaticDimension
+        tableView.rowHeight = 200
         view.addSubview(tableView)
+    }
+        
+    func setupConstraints() {
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-        
     }
     
 }
@@ -105,6 +106,16 @@ extension RootViewController: UITableViewDataSource {
         cell.configure(weather)
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let verticalPadding: CGFloat = 8
+        let maskLayer = CALayer()
+        maskLayer.cornerRadius = 10
+        maskLayer.backgroundColor = UIColor.black.cgColor
+        maskLayer.frame = CGRect(x: cell.bounds.origin.x, y: cell.bounds.origin.y, width: cell.bounds.width, height: cell.bounds.height).insetBy(dx: 0, dy: verticalPadding/2)
+        cell.contentView.addGradient(colors: [.systemBlue, .cyan])
+        cell.layer.mask = maskLayer
+    }
 }
 
 extension RootViewController: UITableViewDelegate {
@@ -112,7 +123,6 @@ extension RootViewController: UITableViewDelegate {
         let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") {
             (contextualAction: UIContextualAction, swipeButton: UIView, completionHandler: (Bool) -> Void) in
             citiesArray.remove(at: indexPath.row)
-            print("Удаляем строку")
             let indexPaths = [indexPath]
             tableView.deleteRows(at: indexPaths, with: .automatic)
             completionHandler(true)
@@ -130,4 +140,18 @@ extension RootViewController: UITableViewDelegate {
     }
 }
 
-
+extension UIView {
+    // Метод для закрашивания ячеек в градиент
+    func addGradient(colors: [UIColor] = [.blue, .white], locations: [NSNumber] = [0, 2], startPoint: CGPoint = CGPoint(x: 0.0, y: 1.0), endPoint: CGPoint = CGPoint(x: 1.0, y: 1.0), type: CAGradientLayerType = .axial) {
+        let gradient = CAGradientLayer()
+        
+        gradient.frame.size = self.frame.size
+        gradient.frame.origin = CGPoint(x: 0.0, y: 0.0)
+        
+        gradient.colors = colors.map { $0.cgColor }
+        gradient.locations = locations
+        gradient.startPoint = startPoint
+        gradient.endPoint = endPoint
+        self.layer.insertSublayer(gradient, at: 0)
+    }
+}

@@ -26,6 +26,7 @@ class AddCityViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 8
         button.setTitle("Сохранить", for: .normal)
         button.addTarget(self, action: #selector(done), for: .touchUpInside)
         return button
@@ -35,20 +36,23 @@ class AddCityViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 8
         button.setTitle("Отменить", for: .normal)
         button.addTarget(self, action: #selector(cancel), for: .touchUpInside)
         return button
     }()
     
     private lazy var cityName: UITextField = {
-       let textField = UITextField()
+        let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.textAlignment = .center
+        textField.borderStyle = .line
         textField.placeholder = "Введите название города"
         return textField
     }()
     
     func setupViews() {
+        view.backgroundColor = .white
         view.addSubview(cityName)
         view.addSubview(doneButton)
         view.addSubview(cancelButton)
@@ -56,30 +60,25 @@ class AddCityViewController: UIViewController {
     func setupConstraints() {
         NSLayoutConstraint.activate([
             cityName.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            cityName.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            cityName.widthAnchor.constraint(equalToConstant: 200),
-            cityName.heightAnchor.constraint(equalToConstant: 50),
+            cityName.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50),
+            cityName.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            cityName.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.07),
             doneButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             doneButton.topAnchor.constraint(equalTo: cityName.bottomAnchor, constant: 20),
-            doneButton.widthAnchor.constraint(equalToConstant: 200),
-            doneButton.heightAnchor.constraint(equalToConstant: 50),
+            doneButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            doneButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.07),
             cancelButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             cancelButton.topAnchor.constraint(equalTo: doneButton.bottomAnchor, constant: 20),
-            cancelButton.widthAnchor.constraint(equalToConstant: 200),
-            cancelButton.heightAnchor.constraint(equalToConstant: 50)
+            cancelButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            cancelButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.07)
         ])
     }
     
     @objc func done(_ sender: UIButton) {
-        print("Метод done() выполнена, cityName.text: \(String(describing: cityName.text))")
         guard let item = cityName.text else { return }
-        print(item)
         delegate?.addCityViewController(self, didFinishAdding: item)
         
         guard let viewControllers = self.navigationController?.viewControllers else { return }
-        for i in viewControllers {
-            print("viewController: \(i)")
-        }
         
         for viewController in viewControllers {
             if viewController is RootViewController {
@@ -90,7 +89,6 @@ class AddCityViewController: UIViewController {
     }
     
     @objc func cancel(_ sender: UIButton) {
-        print("Метод cancel() выполнен")
         delegate?.addCityViewControllerDidCancel(self)
         self.navigationController?.popViewController(animated: true)
     }
