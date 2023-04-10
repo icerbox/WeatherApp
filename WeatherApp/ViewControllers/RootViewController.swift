@@ -36,7 +36,12 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Кнопка для добавления нового города
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewCity))
+        
+        // Кнопка для обновления основной таблицы
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(updateTable))
+        
         // Если массив citiesArray пустой, то заполняем пустыми значениями в соответствии с количеством элементов в citiesNameArray
         if citiesArray.isEmpty {
             citiesArray = Array(repeating: defaultCity, count: citiesNameArray.count)
@@ -71,6 +76,13 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
         }
     }
     
+    @objc func updateTable() {
+        DispatchQueue.main.async {
+            print("Обновляем таблицу")
+            self.tableView.reloadData()
+        }
+    }
+    
     func setupViews() {
         title = "Прогноз погоды"
         tableView.dataSource = self
@@ -78,17 +90,15 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
         tableView.register(CitiesListTableViewCell.self, forCellReuseIdentifier: citiesCellIdentifier)
         tableView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-//        tableView.rowHeight = UITableView.automaticDimension
-        tableView.rowHeight = 200
         view.addSubview(tableView)
     }
         
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)
         ])
     }
     
@@ -102,7 +112,7 @@ extension RootViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: citiesCellIdentifier, for: indexPath) as! CitiesListTableViewCell
         var weather = WeatherData()
-        weather = citiesArray[indexPath.row]
+            weather = citiesArray[indexPath.row]
         cell.configure(weather)
         return cell
     }
@@ -110,10 +120,10 @@ extension RootViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let verticalPadding: CGFloat = 8
         let maskLayer = CALayer()
-        maskLayer.cornerRadius = 10
-        maskLayer.backgroundColor = UIColor.black.cgColor
-        maskLayer.frame = CGRect(x: cell.bounds.origin.x, y: cell.bounds.origin.y, width: cell.bounds.width, height: cell.bounds.height).insetBy(dx: 0, dy: verticalPadding/2)
-        cell.contentView.addGradient(colors: [.systemBlue, .cyan])
+            maskLayer.cornerRadius = 15
+            maskLayer.backgroundColor = UIColor.black.cgColor
+            maskLayer.frame = CGRect(x: cell.bounds.origin.x, y: cell.bounds.origin.y, width: cell.bounds.width, height: cell.bounds.height).insetBy(dx: 0, dy: verticalPadding/2)
+        cell.contentView.addGradient(colors: [.systemBlue, .systemCyan])
         cell.layer.mask = maskLayer
     }
 }
@@ -138,11 +148,15 @@ extension RootViewController: UITableViewDelegate {
         detailViewController.selectedCity = citiesArray[indexPath.row]
         show(detailViewController, sender: self)
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UIScreen.main.bounds.height / 4
+    }
 }
 
 extension UIView {
     // Метод для закрашивания ячеек в градиент
-    func addGradient(colors: [UIColor] = [.blue, .white], locations: [NSNumber] = [0, 2], startPoint: CGPoint = CGPoint(x: 0.0, y: 1.0), endPoint: CGPoint = CGPoint(x: 1.0, y: 1.0), type: CAGradientLayerType = .axial) {
+    func addGradient(colors: [UIColor] = [.white, .white], locations: [NSNumber] = [0, 2], startPoint: CGPoint = CGPoint(x: 0.0, y: 1.0), endPoint: CGPoint = CGPoint(x: 1.0, y: 1.0), type: CAGradientLayerType = .axial) {
         let gradient = CAGradientLayer()
         
         gradient.frame.size = self.frame.size

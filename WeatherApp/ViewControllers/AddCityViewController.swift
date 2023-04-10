@@ -46,6 +46,7 @@ class AddCityViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.textAlignment = .center
+        textField.setBorderColor()
         textField.borderStyle = .line
         textField.placeholder = "Введите название города"
         return textField
@@ -95,4 +96,11 @@ class AddCityViewController: UIViewController {
     
 }
 
-
+extension UITextField {
+    func setBorderColor() {
+        self.layer.cornerRadius = 10
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = UIColor.systemBlue.cgColor
+        self.layer.masksToBounds = true
+    }
+}

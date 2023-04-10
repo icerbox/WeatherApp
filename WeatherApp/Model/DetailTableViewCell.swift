@@ -16,6 +16,25 @@ final class DetailTableViewCell: UITableViewCell {
     lazy var conditionIcon = {
         var image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
+//        image.backgroundColor = .green
+        image.contentMode = .scaleAspectFit
+        return image
+    }()
+     
+    // Имэджвью для вывода иконки давления
+    lazy var pressureIcon = {
+        var image = UIImageView(image: UIImage(systemName: "thermometer.high"))
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.tintColor = .white
+        image.contentMode = .scaleAspectFit
+        return image
+    }()
+    
+    // Имэджвью для вывода иконки давления
+    lazy var windIcon = {
+        var image = UIImageView(image: UIImage(systemName: "wind"))
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.tintColor = .white
         image.contentMode = .scaleAspectFit
         return image
     }()
@@ -39,7 +58,7 @@ final class DetailTableViewCell: UITableViewCell {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.textColor = .white
-        label.font = UIFont(name: "Helvetica", size: 24)
+        label.font = UIFont(name: "Helvetica", size: 20)
         label.textAlignment = .center
         return label
     }()
@@ -104,10 +123,23 @@ final class DetailTableViewCell: UITableViewCell {
         return label
     }()
     
+    // Лейбл для минимальной + максимальной температуры
+    private lazy var averageTemp: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont(name: "Helvetica", size: 20)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    
     private lazy var upperStackView: UIStackView = {
         let stackView = UIStackView()
+        // stackView.backgroundColor = .red
         stackView.translatesAutoresizingMaskIntoConstraints = false
-//        stackView.backgroundColor = .yellow
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 5
@@ -124,7 +156,8 @@ final class DetailTableViewCell: UITableViewCell {
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 5
-        stackView.contentMode = .scaleAspectFill
+        stackView.contentMode = .scaleAspectFit
+        stackView.distribution = .equalCentering
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         stackView.addArrangedSubview(conditionIcon)
@@ -134,6 +167,7 @@ final class DetailTableViewCell: UITableViewCell {
     
     private lazy var middleRightStackView: UIStackView = {
         let stackView = UIStackView()
+//        stackView.backgroundColor = .orange
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.alignment = .center
@@ -142,12 +176,14 @@ final class DetailTableViewCell: UITableViewCell {
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         stackView.addArrangedSubview(weatherTemperature)
+        stackView.addArrangedSubview(averageTemp)
         stackView.addArrangedSubview(weatherCondition)
         return stackView
     }()
     
     private lazy var bottomStackView: UIStackView = {
         let stackView = UIStackView()
+        // stackView.backgroundColor = .blue
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.alignment = .center
@@ -155,10 +191,36 @@ final class DetailTableViewCell: UITableViewCell {
         stackView.contentMode = .scaleAspectFill
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
+        stackView.addArrangedSubview(pressureStackView)
+        stackView.addArrangedSubview(windSpeedStackView)
+        return stackView
+    }()
+    
+    private lazy var pressureStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 5
+        stackView.contentMode = .scaleAspectFill
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         stackView.addArrangedSubview(weatherPressure)
+        stackView.addArrangedSubview(pressureIcon)
+        return stackView
+    }()
+    
+    private lazy var windSpeedStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 5
+        stackView.contentMode = .scaleAspectFill
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         stackView.addArrangedSubview(windSpeed)
-        stackView.addArrangedSubview(minTemp)
-        stackView.addArrangedSubview(maxTemp)
+        stackView.addArrangedSubview(windIcon)
         return stackView
     }()
     
@@ -173,8 +235,6 @@ final class DetailTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    typealias Completion = (Result<UIImage, Error>) -> Void
     
     func configure(_ viewModel: WeatherData) {
         // Добавляем переменную которая будет хранить полученную иконку
@@ -196,32 +256,43 @@ final class DetailTableViewCell: UITableViewCell {
         // Назначаем остальные данные
         cityName.text = viewModel.name
         weatherCondition.text = viewModel.conditionString
-        weatherTemperature.text = "\(String(describing: viewModel.temperatureString))"
+        weatherTemperature.text = "\(String(describing: viewModel.temperatureString))ºС"
         weatherPressure.text = "\(String(describing: viewModel.pressureMm))"
         windSpeed.text = "\(String(describing: viewModel.windSpeed))"
-        minTemp.text = "\(String(describing: viewModel.tempMin))"
-        maxTemp.text = "\(String(describing: viewModel.tempMax))"
+        minTemp.text = "\(String(describing: viewModel.tempMin))º"
+        maxTemp.text = "\(String(describing: viewModel.tempMax))º"
+        averageTemp.text = "\(viewModel.tempMin)º / \(viewModel.tempMax)º"
     }
     
     // Устанавливаем констрейнты
     private func setupConstraints() {
         NSLayoutConstraint.activate([
+            // Стеквью для названия города
             upperStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             upperStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             upperStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            upperStackView.heightAnchor.constraint(equalToConstant: 100),
+            upperStackView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.2),
+            
+            // Стеквью для иконки, температуры и погодны условий
             middleStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             middleStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             middleStackView.topAnchor.constraint(equalTo: upperStackView.bottomAnchor),
-            middleStackView.heightAnchor.constraint(equalToConstant: 200),
+            middleStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 200),
+            
+            // Констрейнты для иконки
+            conditionIcon.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.3),
+            conditionIcon.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.2),
+            pressureIcon.widthAnchor.constraint(equalToConstant: 30),
+            pressureIcon.heightAnchor.constraint(equalToConstant: 30),
+            
+            windIcon.widthAnchor.constraint(equalToConstant: 30),
+            windIcon.heightAnchor.constraint(equalToConstant: 30),
+            
+            // Стеквью для давления воздуха, скорости ветра, минимальной и максимальной температуры
             bottomStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             bottomStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             bottomStackView.topAnchor.constraint(equalTo: middleStackView.bottomAnchor),
             bottomStackView.heightAnchor.constraint(equalToConstant: 300),
-            conditionIcon.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.3),
-            conditionIcon.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.3),
-//            conditionIcon.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            
         ])
     }
 }

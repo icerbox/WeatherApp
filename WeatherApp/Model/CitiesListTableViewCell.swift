@@ -18,7 +18,7 @@ final class CitiesListTableViewCell: UITableViewCell {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.textColor = .white
-        label.font = UIFont(name: "Helvetica", size: 20)
+        label.font = UIFont(name: "Helvetica-Bold", size: 24)
         label.textAlignment = .center
         return label
     }()
@@ -41,7 +41,7 @@ final class CitiesListTableViewCell: UITableViewCell {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.textColor = .white
-        label.font = UIFont(name: "Helvetica-Bold", size: 30)
+        label.font = UIFont(name: "Helvetica-Bold", size: 36)
         label.textAlignment = .center
         return label
     }()
@@ -58,8 +58,22 @@ final class CitiesListTableViewCell: UITableViewCell {
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         stackView.addArrangedSubview(cityName)
-        stackView.addArrangedSubview(weatherCondition)
+        stackView.addArrangedSubview(rightStackView)
+        return stackView
+    }()
+    
+    private lazy var rightStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 5
+        stackView.contentMode = .scaleAspectFill
+        stackView.distribution = .fillEqually
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         stackView.addArrangedSubview(weatherTemperature)
+        stackView.addArrangedSubview(weatherCondition)
         return stackView
     }()
     
@@ -77,7 +91,7 @@ final class CitiesListTableViewCell: UITableViewCell {
     func configure(_ viewModel: WeatherData) {
         cityName.text = viewModel.name
         weatherCondition.text = viewModel.conditionString
-        weatherTemperature.text = "\(String(describing: viewModel.temperatureString))"
+        weatherTemperature.text = "\(String(describing: viewModel.temperatureString))℃"
     }
         
     // Устанавливаем констрейнты
@@ -89,5 +103,4 @@ final class CitiesListTableViewCell: UITableViewCell {
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
-    
 }

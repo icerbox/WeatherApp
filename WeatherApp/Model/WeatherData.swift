@@ -30,6 +30,7 @@ struct WeatherData {
         case "overcast": return "Пасмурно"
         case "drizzle": return "Морось"
         case "light-rain": return "Небольшой дождь"
+        case "rain": return "Дождь"
         case "moderate-rain": return "Умеренно сильный дождь"
         case "heavy-rain": return "Сильный дождь"
         case "continuous-heavy-rain": return "Длительный сильный дождь"

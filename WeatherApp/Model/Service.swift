@@ -57,6 +57,7 @@ final class Service {
         ]
         // Если ссылка сформирована продолжаем
         guard let url = components?.url else { return }
+        print(url)
         // Формируем запрос из ссылки
         var request = URLRequest(url: url)
         // В соответствии с документацией Яндекс API добавляем к токену значение для хидера

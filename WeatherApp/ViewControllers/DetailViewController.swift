@@ -28,16 +28,16 @@ class DetailViewController: UIViewController,  UINavigationControllerDelegate {
         tableView.register(DetailTableViewCell.self, forCellReuseIdentifier: detailCellIdentifier)
         tableView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.rowHeight = view.bounds.height / 1.5
+        tableView.rowHeight = view.bounds.height * 0.9
         view.addSubview(tableView)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)
         ])
     }
 }
@@ -67,4 +67,5 @@ extension DetailViewController: UITableViewDelegate {
         cell.contentView.addGradient(colors: [.systemBlue, .cyan])
         cell.layer.mask = maskLayer
     }
+
 }
