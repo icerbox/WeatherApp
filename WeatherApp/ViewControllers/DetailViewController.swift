@@ -24,7 +24,6 @@ class DetailViewController: UIViewController,  UINavigationControllerDelegate {
     func setupViews() {
         title = "Подробный прогноз погоды"
         tableView.dataSource = self
-        tableView.delegate = self
         tableView.register(DetailTableViewCell.self, forCellReuseIdentifier: detailCellIdentifier)
         tableView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -55,17 +54,4 @@ extension DetailViewController: UITableViewDataSource {
         cell.configure(currentCity)
         return cell
     }
-}
-
-extension DetailViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let verticalPadding: CGFloat = 8
-        let maskLayer = CALayer()
-        maskLayer.cornerRadius = 10
-        maskLayer.backgroundColor = UIColor.black.cgColor
-        maskLayer.frame = CGRect(x: cell.bounds.origin.x, y: cell.bounds.origin.y, width: cell.bounds.width, height: cell.bounds.height).insetBy(dx: 0, dy: verticalPadding/2)
-        cell.contentView.addGradient(colors: [.systemBlue, .cyan])
-        cell.layer.mask = maskLayer
-    }
-
 }

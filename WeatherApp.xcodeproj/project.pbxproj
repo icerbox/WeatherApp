@@ -14,6 +14,8 @@
 		D0A253B929DBB7E100A1E135 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A253B829DBB7E100A1E135 /* RootViewController.swift */; };
 		D0A253BE29DBB7E400A1E135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0A253BD29DBB7E400A1E135 /* Assets.xcassets */; };
 		D0A253C129DBB7E400A1E135 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0A253BF29DBB7E400A1E135 /* LaunchScreen.storyboard */; };
+		D0DE49FF29E4EC06001A6F84 /* ViewMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DE49FE29E4EC06001A6F84 /* ViewMetrics.swift */; };
+		D0DE4A0129E4EFD3001A6F84 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DE4A0029E4EFD3001A6F84 /* Extensions.swift */; };
 		D0FEA50B29DBC4C000F2F521 /* AddCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FEA50A29DBC4C000F2F521 /* AddCityViewController.swift */; };
 		D0FEA50D29DBC8DE00F2F521 /* CitiesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FEA50C29DBC8DE00F2F521 /* CitiesListTableViewCell.swift */; };
 		D0FEA50F29DBCA4A00F2F521 /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FEA50E29DBCA4A00F2F521 /* ApiResponse.swift */; };
@@ -34,6 +36,8 @@
 		D0A253BD29DBB7E400A1E135 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0A253C029DBB7E400A1E135 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0A253C229DBB7E400A1E135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0DE49FE29E4EC06001A6F84 /* ViewMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMetrics.swift; sourceTree = "<group>"; };
+		D0DE4A0029E4EFD3001A6F84 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D0FEA50A29DBC4C000F2F521 /* AddCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityViewController.swift; sourceTree = "<group>"; };
 		D0FEA50C29DBC8DE00F2F521 /* CitiesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListTableViewCell.swift; sourceTree = "<group>"; };
 		D0FEA50E29DBCA4A00F2F521 /* ApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
@@ -60,7 +64,6 @@
 				82CC8ACDD283774B540717A1 /* Pods-WeatherApp.debug.xcconfig */,
 				C44ADB927B22A632656D6128 /* Pods-WeatherApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -111,6 +114,8 @@
 				D0FEA51229DC679900F2F521 /* Service.swift */,
 				D0FEA50C29DBC8DE00F2F521 /* CitiesListTableViewCell.swift */,
 				D011949829DEB7E0003646E4 /* DetailTableViewCell.swift */,
+				D0DE49FE29E4EC06001A6F84 /* ViewMetrics.swift */,
+				D0DE4A0029E4EFD3001A6F84 /* Extensions.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -243,11 +248,13 @@
 				D011949729DEB674003646E4 /* DetailViewController.swift in Sources */,
 				D0A253B929DBB7E100A1E135 /* RootViewController.swift in Sources */,
 				D0FEA51329DC679900F2F521 /* Service.swift in Sources */,
+				D0DE4A0129E4EFD3001A6F84 /* Extensions.swift in Sources */,
 				D0FEA50D29DBC8DE00F2F521 /* CitiesListTableViewCell.swift in Sources */,
 				D0FEA50B29DBC4C000F2F521 /* AddCityViewController.swift in Sources */,
 				D0FEA50F29DBCA4A00F2F521 /* ApiResponse.swift in Sources */,
 				D0FEA51129DBD71300F2F521 /* AuthViewController.swift in Sources */,
 				D0FEA51629DC719600F2F521 /* WeatherData.swift in Sources */,
+				D0DE49FF29E4EC06001A6F84 /* ViewMetrics.swift in Sources */,
 				D011949929DEB7E0003646E4 /* DetailTableViewCell.swift in Sources */,
 				D0A253B529DBB7E100A1E135 /* AppDelegate.swift in Sources */,
 			);

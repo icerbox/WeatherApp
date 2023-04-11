@@ -22,26 +22,10 @@ class AddCityViewController: UIViewController {
         setupConstraints()
     }
     
-    private lazy var doneButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 8
-        button.setTitle("Сохранить", for: .normal)
-        button.addTarget(self, action: #selector(done), for: .touchUpInside)
-        return button
-    }()
+    private lazy var doneButton = UIButton.makeButton(title: "Сохранить", action: #selector(done))
     
-    private lazy var cancelButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 8
-        button.setTitle("Отменить", for: .normal)
-        button.addTarget(self, action: #selector(cancel), for: .touchUpInside)
-        return button
-    }()
-    
+    private lazy var cancelButton = UIButton.makeButton(title: "Отменить", action: #selector(cancel))
+        
     private lazy var cityName: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -96,11 +80,4 @@ class AddCityViewController: UIViewController {
     
 }
 
-extension UITextField {
-    func setBorderColor() {
-        self.layer.cornerRadius = 10
-        self.layer.borderWidth = 1.0
-        self.layer.borderColor = UIColor.systemBlue.cgColor
-        self.layer.masksToBounds = true
-    }
-}
+

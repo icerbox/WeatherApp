@@ -59,6 +59,7 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
         }
         isFirst = false
     }
+
     // Метод который вызывается при нажатии на кнопку "+" для добавления нового города в главный список
     @objc func addNewCity() {
         let addCityViewController = AddCityViewController()
@@ -111,6 +112,8 @@ extension RootViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: citiesCellIdentifier, for: indexPath) as! CitiesListTableViewCell
+        cell.backgroundColor = .systemBlue
+        cell.layer.cornerRadius = ViewMetrics.cornerRadius
         var weather = WeatherData()
             weather = citiesArray[indexPath.row]
         cell.configure(weather)
@@ -120,12 +123,12 @@ extension RootViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let verticalPadding: CGFloat = 8
         let maskLayer = CALayer()
-            maskLayer.cornerRadius = 15
+        maskLayer.cornerRadius = ViewMetrics.cornerRadius
             maskLayer.backgroundColor = UIColor.black.cgColor
             maskLayer.frame = CGRect(x: cell.bounds.origin.x, y: cell.bounds.origin.y, width: cell.bounds.width, height: cell.bounds.height).insetBy(dx: 0, dy: verticalPadding/2)
-        cell.contentView.addGradient(colors: [.systemBlue, .systemCyan])
         cell.layer.mask = maskLayer
     }
+    
 }
 
 extension RootViewController: UITableViewDelegate {
@@ -148,24 +151,9 @@ extension RootViewController: UITableViewDelegate {
         detailViewController.selectedCity = citiesArray[indexPath.row]
         show(detailViewController, sender: self)
     }
-    
+    // Задаем высоту ячеек
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UIScreen.main.bounds.height / 4
     }
 }
 
-extension UIView {
-    // Метод для закрашивания ячеек в градиент
-    func addGradient(colors: [UIColor] = [.white, .white], locations: [NSNumber] = [0, 2], startPoint: CGPoint = CGPoint(x: 0.0, y: 1.0), endPoint: CGPoint = CGPoint(x: 1.0, y: 1.0), type: CAGradientLayerType = .axial) {
-        let gradient = CAGradientLayer()
-        
-        gradient.frame.size = self.frame.size
-        gradient.frame.origin = CGPoint(x: 0.0, y: 0.0)
-        
-        gradient.colors = colors.map { $0.cgColor }
-        gradient.locations = locations
-        gradient.startPoint = startPoint
-        gradient.endPoint = endPoint
-        self.layer.insertSublayer(gradient, at: 0)
-    }
-}
