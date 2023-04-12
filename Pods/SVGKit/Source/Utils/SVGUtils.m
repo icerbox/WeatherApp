@@ -341,7 +341,7 @@ SVGColor SVGColorFromString (const char *string) {
 		}
 	}
     else if (!strncmp(string, "hsl(", 4) || !strncmp(string, "hsla(", 5)) {
-        CGFloat h; CGFloat s = 0.0; CGFloat l;
+        CGFloat h = 0.0; CGFloat s = 0.0; CGFloat l = 0.0;
         
         size_t len = strlen(string);
         

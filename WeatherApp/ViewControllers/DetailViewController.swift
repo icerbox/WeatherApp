@@ -20,7 +20,7 @@ class DetailViewController: UIViewController,  UINavigationControllerDelegate {
         setupViews()
         setupConstraints()
     }
-    
+
     func setupViews() {
         title = "Подробный прогноз погоды"
         tableView.dataSource = self
@@ -41,6 +41,7 @@ class DetailViewController: UIViewController,  UINavigationControllerDelegate {
     }
 }
 
+// MARK: - TableViewDataSource
 extension DetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -50,6 +51,8 @@ extension DetailViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: detailCellIdentifier, for: indexPath) as! DetailTableViewCell
         // Если кликнутый город имеет значение, продолжаем
         guard let currentCity = selectedCity else { return UITableViewCell() }
+        // Делаем ячейку не кликабельной
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         // Вызываем метод configure из кастомной ячейки DetailTableViewCell
         cell.configure(currentCity)
         return cell

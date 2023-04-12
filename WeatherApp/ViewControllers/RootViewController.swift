@@ -9,30 +9,35 @@ import UIKit
 
 class RootViewController: UIViewController, UINavigationControllerDelegate, AddCityViewControllerDelegate {
     
+    // Метод который вызывается из AddCityViewController при нажатии на кнопку "Cancel"
     func addCityViewControllerDidCancel(_ controller: AddCityViewController) {
         navigationController?.popViewController(animated: true)
     }
     
+    // Метод который вызываетс из AddCityViewController при нажатии на кнопку "Done"
     func addCityViewController(_ controller: AddCityViewController, didFinishAdding item: String) {
         citiesNameArray.append(item)
         citiesArray.append(defaultCity)
         addCities()
     }
     
+    // Переменная поменяется на true, после загрузки данных
+    var isDataLoaded: Bool = false
+    
+    // Город по умолчанию для заполнения данных на случай если citiesArray будет пуст
     let defaultCity = WeatherData()
     
     // Массив который содержит имена городов
     var citiesNameArray = ["Якутск", "Москва", "Санкт-Петербург"]
     
     private let service = Service()
-    private let tableView = UITableView()
     
-    // Был ли это первый запуск приложения. После первого запуска во ViewDidAppear меняем на false
-    private var isFirst = true
+    private let tableView = UITableView()
     // Переменная для json данных
     private var weatherData: ApiResponse?
+    // Идентификатор кастомной ячейки
     private let citiesCellIdentifier = "CitiesListTableViewCell"
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,15 +56,6 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
         setupConstraints()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        // Если это первый запуск, то обновляем данные о погоде
-        if isFirst {
-//            service.updateData()
-        }
-        isFirst = false
-    }
-
     // Метод который вызывается при нажатии на кнопку "+" для добавления нового города в главный список
     @objc func addNewCity() {
         let addCityViewController = AddCityViewController()
@@ -67,19 +63,18 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
         show(addCityViewController, sender: self)
     }
     
+    
     func addCities() {
         service.getCityWeather(citiesArray: self.citiesNameArray) { (index, weather) in
             citiesArray[index] = weather
             citiesArray[index].name = self.citiesNameArray[index]
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            self.updateTable(changeDataLoadedTo: true)
         }
     }
     
-    @objc func updateTable() {
+    @objc func updateTable(changeDataLoadedTo: Bool) {
         DispatchQueue.main.async {
-            print("Обновляем таблицу")
+            self.isDataLoaded = changeDataLoadedTo
             self.tableView.reloadData()
         }
     }
@@ -102,7 +97,6 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)
         ])
     }
-    
 }
 
 extension RootViewController: UITableViewDataSource {
@@ -145,11 +139,13 @@ extension RootViewController: UITableViewDelegate {
     }
     // При клике на ячейку:
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Создаем экземпляр детального вьюконтроллера
-        let detailViewController = DetailViewController()
-        
-        detailViewController.selectedCity = citiesArray[indexPath.row]
-        show(detailViewController, sender: self)
+        if isDataLoaded {
+            // Создаем экземпляр детального вьюконтроллера
+            let detailViewController = DetailViewController()
+            
+            detailViewController.selectedCity = citiesArray[indexPath.row]
+            show(detailViewController, sender: self)
+        } 
     }
     // Задаем высоту ячеек
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

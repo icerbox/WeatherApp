@@ -9,14 +9,6 @@ import Foundation
 import UIKit
 
 struct ViewMetrics {
-    // Размеры шрифтов
-    static let headerFontSize: CGFloat = 36.0
-    static let standartFontSize: CGFloat = 24.0
-    static let mediumFontSize: CGFloat = 20.0
-    
-    // Шрифты
-    static let standartFont: String = "Helvetica"
-    static let boldFont: String = "Helvetica-bold"
     
     // Отступы
     static let cellSpacing: Int = 10

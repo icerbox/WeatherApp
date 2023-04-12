@@ -21,13 +21,17 @@ struct Info: Codable {
 
 struct Fact: Codable {
     var temp: Double
+    var feels_like: Int
     var icon: String
     var condition: String
     var windSpeed: Double
     var pressureMm: Int
+    var humidity: Int
+    var obs_time: Double
+    var wind_dir: String
     
     enum CodingKeys: String, CodingKey {
-        case temp, icon, condition
+        case temp, feels_like, icon, condition, humidity, obs_time, wind_dir
         case windSpeed = "wind_speed"
         case pressureMm = "pressure_mm"
     }
@@ -35,6 +39,8 @@ struct Fact: Codable {
 
 struct Forecasts: Codable {
     var parts: Parts
+    var rise_begin: String
+    var set_end: String
 }
 
 struct Parts: Codable {

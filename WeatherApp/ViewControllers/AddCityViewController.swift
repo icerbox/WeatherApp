@@ -44,18 +44,18 @@ class AddCityViewController: UIViewController {
     }
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            cityName.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            cityName.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50),
-            cityName.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            cityName.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.07),
-            doneButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            cityName.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            cityName.safeAreaLayoutGuide.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50),
+            cityName.safeAreaLayoutGuide.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            cityName.safeAreaLayoutGuide.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.07),
+            doneButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             doneButton.topAnchor.constraint(equalTo: cityName.bottomAnchor, constant: 20),
-            doneButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            doneButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.07),
-            cancelButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            doneButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.8),
+            doneButton.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.07),
+            cancelButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             cancelButton.topAnchor.constraint(equalTo: doneButton.bottomAnchor, constant: 20),
-            cancelButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            cancelButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.07)
+            cancelButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.8),
+            cancelButton.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.07)
         ])
     }
     
@@ -77,7 +77,6 @@ class AddCityViewController: UIViewController {
         delegate?.addCityViewControllerDidCancel(self)
         self.navigationController?.popViewController(animated: true)
     }
-    
 }
 
 
