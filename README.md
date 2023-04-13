@@ -1,1 +1,1 @@
-![WeatherApp provides weather forecasts using Yandex API](WeatherApp.gif)
+![WeatherApp provides weather forecasts using Yandex API]
