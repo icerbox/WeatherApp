@@ -32,6 +32,25 @@ extension UILabel {
     }
 }
 
+extension UIImageView {
+    static func makeImageViewWithImage(systemName: String, tintColor: UIColor, contentMode: UIView.ContentMode) -> UIImageView {
+        var image = UIImageView(image: UIImage(systemName: systemName))
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.tintColor = tintColor
+        image.contentMode = contentMode
+        return image
+    }
+
+    static func makeImageViewWithoutImage(contentMode: UIView.ContentMode) -> UIImageView {
+        var image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = contentMode
+        return image
+    }
+}
+
+
+
 extension UITextField {
     func setBorderColor() {
         self.layer.cornerRadius = 10

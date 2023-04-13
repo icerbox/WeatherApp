@@ -12,31 +12,31 @@ var citiesArray = [WeatherData]()
 
 // Структура в которой собираются данные из json данных которые поступили в ApiResponse
 struct WeatherData {
-    var name: String = "Название"
-    var temperature: Double = 0.0
+    var name = "Название"
+    var temperature = 0.0
     // Вводим переменную temperatureString чтобы убрать .0 из показателя температуры
     var temperatureString: String {
         return String(format: "%.0f", temperature)
     }
     
-    var feelsLike: Int = 0
+    var feelsLike = 0
     // Вводим переменную temperatureString чтобы убрать .0 из показателя температуры
-    var conditionCode: String = ""
-    var url: String = ""
-    var condition: String = ""
-    var pressureMm: Int = 0
-    var windSpeed: Double = 0.0
+    var conditionCode = ""
+    var url = ""
+    var condition = ""
+    var pressureMm = 0
+    var windSpeed = 0.0
     // Вводим переменную windString чтобы убрать .0 из показателя скорости ветра
     var windString: String {
         return String(format: "%.0f", windSpeed)
     }
-    var humidity: Int = 0
-    var tempMin: Int = 0
-    var tempMax: Int = 0
-    var obs_time: Double = 0.0
-    var rise_begin: String = ""
-    var set_end: String = ""
-    var wind_dir: String = ""
+    var humidity = 0
+    var tempMin = 0
+    var tempMax = 0
+    var obs_time = 0.0
+    var rise_begin = ""
+    var set_end = ""
+    var wind_dir = ""
     
     var conditionString: String {
         switch condition {

@@ -4,9 +4,8 @@
 //
 //  Created by Айсен Еремеев on 06.04.2023.
 //
-
-import UIKit
 import SVGKit
+import UIKit
 
 final class DetailTableViewCell: UITableViewCell {
     
@@ -52,67 +51,26 @@ final class DetailTableViewCell: UITableViewCell {
     // MARK: - ImageViews for icons
     
     // Имэджвью для вывода иконки погодных условий
-    lazy var conditionIcon = {
-        var image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleAspectFit
-        return image
-    }()
-    
+    private lazy var conditionIcon = UIImageView.makeImageViewWithoutImage(contentMode: .scaleAspectFit)
+
     // Имэджвью для вывода иконки давления
-    lazy var pressureIcon = {
-            var image = UIImageView(image: UIImage(systemName: "thermometer.high"))
-            image.translatesAutoresizingMaskIntoConstraints = false
-            image.tintColor = .systemBlue
-            image.contentMode = .scaleAspectFit
-            return image
-    }()
-    
+    private lazy var pressureIcon = UIImageView.makeImageViewWithImage(systemName: "thermometer.high", tintColor: .systemBlue, contentMode: .scaleAspectFit)
+
     // Имэджвью для вывода иконки давления
-    lazy var humidityIcon = {
-            var image = UIImageView(image: UIImage(systemName: "humidity"))
-            image.translatesAutoresizingMaskIntoConstraints = false
-            image.tintColor = .systemBlue
-            image.contentMode = .scaleAspectFit
-            return image
-    }()
-    
+    private lazy var humidityIcon = UIImageView.makeImageViewWithImage(systemName: "humidity", tintColor: .systemBlue, contentMode: .scaleAspectFit)
+
     // Имэджвью для вывода иконки скорости ветра
-    lazy var windIcon = {
-        var image = UIImageView(image: UIImage(systemName: "wind"))
-            image.translatesAutoresizingMaskIntoConstraints = false
-            image.tintColor = .systemBlue
-            image.contentMode = .scaleAspectFit
-            return image
-    }()
-    
+    private lazy var windIcon = UIImageView.makeImageViewWithImage(systemName: "wind", tintColor: .systemBlue, contentMode: .scaleAspectFit)
+
     // Имэджвью для вывода иконки времени восхода солнца
-    lazy var riseIcon = {
-            var image = UIImageView(image: UIImage(systemName: "sunrise"))
-            image.translatesAutoresizingMaskIntoConstraints = false
-            image.tintColor = .systemBlue
-            image.contentMode = .scaleAspectFit
-            return image
-    }()
+    private lazy var riseIcon = UIImageView.makeImageViewWithImage(systemName: "sunrise", tintColor: .systemBlue, contentMode: .scaleAspectFit)
     
     // Имэджвью для вывода иконки времени захода солнца
-    lazy var sunsetIcon = {
-            var image = UIImageView(image: UIImage(systemName: "sunset"))
-            image.translatesAutoresizingMaskIntoConstraints = false
-            image.tintColor = .systemBlue
-            image.contentMode = .scaleAspectFit
-            return image
-    }()
-    
-    // Имэджвью для вывода иконки времени захода солнца
-    lazy var windDirectionIcon = {
-        var image = UIImageView()
-            image.translatesAutoresizingMaskIntoConstraints = false
-            image.tintColor = .systemBlue
-            image.contentMode = .scaleAspectFit
-            return image
-    }()
-    
+    private lazy var sunsetIcon = UIImageView.makeImageViewWithImage(systemName: "sunset", tintColor: .systemBlue, contentMode: .scaleAspectFit)
+
+    // Имэджвью для вывода иконки направления ветра
+    private lazy var windDirectionIcon = UIImageView.makeImageViewWithoutImage(contentMode: .scaleAspectFit)
+
     // MARK: - Labels
     
     // Лейбл для названия города
@@ -154,19 +112,23 @@ final class DetailTableViewCell: UITableViewCell {
     // Лейбл для направления ветра
     private lazy var windDir: UILabel = UILabel.makeLabel(fontSize: .footnote, textColor: .systemBlue)
     
-    // MARK: - StackViews
+    // MARK: - Верхний блок StackView с названием города и временем прогноза
     
     // StackView для названия города
-    private lazy var upperStackView: UIStackView = UIStackView.makeStackView(backgroundColor: .white, axis: .vertical, contentMode: .scaleAspectFill, viewToAdd: [cityName, obsTime], addShadow: false)
+    private lazy var upperStackView: UIStackView = UIStackView.makeStackView(backgroundColor: .systemGray6, axis: .vertical, contentMode: .scaleAspectFill, viewToAdd: [cityName, obsTime], addShadow: false)
+
+    // MARK: - Средний блок StackView с иконкой погодных условий, температурой, средней температурой
     
     // Стеквью для иконки и middleRightStackView
     private lazy var middleStackView: UIStackView = UIStackView.makeStackView(backgroundColor: .systemBlue, axis: .horizontal, contentMode: .scaleAspectFit, viewToAdd: [conditionIcon, middleRightStackView], addShadow: false)
     
     // Стэквью для текущей температуры, средней температуры, погодных условий
     private lazy var middleRightStackView: UIStackView = UIStackView.makeStackView(backgroundColor: .systemBlue, axis: .vertical, contentMode: .scaleAspectFill, viewToAdd: [weatherTemperature, averageTemp, weatherCondition], addShadow: false)
-    
+
+    //MARK: - Нижний блок с иконками StackView. Первая строка
+
     // Стэквью для pressureStackView, windSpeedStackView
-    private lazy var bottomFirstStackView: UIStackView = UIStackView.makeStackView(backgroundColor: .white, axis: .horizontal, contentMode: .scaleAspectFill, viewToAdd: [pressureStackView, windSpeedStackView, humidityStackView], addShadow: false)
+    private lazy var bottomFirstStackView: UIStackView = UIStackView.makeStackView(backgroundColor: .systemGray6, axis: .horizontal, contentMode: .scaleAspectFill, viewToAdd: [pressureStackView, windSpeedStackView, humidityStackView], addShadow: false)
     
     // Стэквью для давления воздуха, для иконки давления воздуха
     private lazy var pressureStackView: UIStackView = UIStackView.makeStackView(backgroundColor: .white, axis: .vertical, contentMode: .scaleAspectFill, viewToAdd: [weatherPressure, pressureIcon], addShadow: true)
@@ -176,9 +138,11 @@ final class DetailTableViewCell: UITableViewCell {
     
     // Стэквью для влажности воздуха, для иконки влажности воздуха
     private lazy var humidityStackView: UIStackView = UIStackView.makeStackView(backgroundColor: .white, axis: .vertical, contentMode: .scaleAspectFill, viewToAdd: [humidity, humidityIcon], addShadow: true)
-    
+
+    //MARK: - Нижний блок с иконками StackView. Вторая строка
+
     // Стэквью для времени восхода солнца,
-    private lazy var bottomSecondStackView: UIStackView = UIStackView.makeStackView(backgroundColor: .white, axis: .horizontal, contentMode: .scaleAspectFill, viewToAdd: [riseBeginStackView, sunsetStackView, windDirStackView], addShadow: false)
+    private lazy var bottomSecondStackView: UIStackView = UIStackView.makeStackView(backgroundColor: .systemGray6, axis: .horizontal, contentMode: .scaleAspectFill, viewToAdd: [riseBeginStackView, sunsetStackView, windDirStackView], addShadow: false)
     
     // Стэквью для восхода солнца, иконки восхода солнца
     private lazy var riseBeginStackView: UIStackView = UIStackView.makeStackView(backgroundColor: .white, axis: .vertical, contentMode: .scaleAspectFill, viewToAdd: [riseBegin, riseIcon], addShadow: true)
@@ -203,8 +167,8 @@ final class DetailTableViewCell: UITableViewCell {
             // Стеквью для иконки, температуры и погодны условий
             middleStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             middleStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            middleStackView.topAnchor.constraint(equalTo: upperStackView.bottomAnchor, constant: 8),
-            middleStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 200),
+            middleStackView.topAnchor.constraint(equalTo: upperStackView.bottomAnchor, constant: ViewMetrics.defaultAnchor),
+            middleStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: ViewMetrics.mediumViewStackHeight),
             
             // Констрейнты для иконки
             conditionIcon.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.2),
@@ -221,14 +185,14 @@ final class DetailTableViewCell: UITableViewCell {
             // Стеквью для давления воздуха, скорости ветра, минимальной и максимальной температуры
             bottomFirstStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             bottomFirstStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            bottomFirstStackView.topAnchor.constraint(equalTo: middleStackView.bottomAnchor, constant: 8),
-            bottomFirstStackView.heightAnchor.constraint(equalToConstant: 150),
+            bottomFirstStackView.topAnchor.constraint(equalTo: middleStackView.bottomAnchor, constant: ViewMetrics.defaultAnchor),
+            bottomFirstStackView.heightAnchor.constraint(equalToConstant: ViewMetrics.bottomViewStackHeight),
             
             // Стеквью для давления воздуха, скорости ветра, минимальной и максимальной температуры
             bottomSecondStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             bottomSecondStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            bottomSecondStackView.topAnchor.constraint(equalTo: bottomFirstStackView.bottomAnchor, constant: 8),
-            bottomSecondStackView.heightAnchor.constraint(equalToConstant: 150),
+            bottomSecondStackView.topAnchor.constraint(equalTo: bottomFirstStackView.bottomAnchor, constant: ViewMetrics.defaultAnchor),
+            bottomSecondStackView.heightAnchor.constraint(equalToConstant: ViewMetrics.bottomViewStackHeight)
         ])
     }
 }

@@ -7,28 +7,28 @@
 
 import UIKit
 
-class RootViewController: UIViewController, UINavigationControllerDelegate, AddCityViewControllerDelegate {
+final class RootViewController: UIViewController, UINavigationControllerDelegate, CityAppender {
     
     // Метод который вызывается из AddCityViewController при нажатии на кнопку "Cancel"
-    func addCityViewControllerDidCancel(_ controller: AddCityViewController) {
+    func cancelButtonTap(_ controller: AddCityViewController) {
         navigationController?.popViewController(animated: true)
     }
     
     // Метод который вызываетс из AddCityViewController при нажатии на кнопку "Done"
-    func addCityViewController(_ controller: AddCityViewController, didFinishAdding item: String) {
+    func doneButtonTap(_ controller: AddCityViewController, didFinishAdding item: String) {
         citiesNameArray.append(item)
         citiesArray.append(defaultCity)
         addCities()
     }
     
     // Переменная поменяется на true, после загрузки данных
-    var isDataLoaded: Bool = false
+    private var isDataLoaded = false
     
     // Город по умолчанию для заполнения данных на случай если citiesArray будет пуст
-    let defaultCity = WeatherData()
+    private let defaultCity = WeatherData()
     
     // Массив который содержит имена городов
-    var citiesNameArray = ["Якутск", "Москва", "Санкт-Петербург"]
+    private var citiesNameArray = ["Якутск", "Москва", "Санкт-Петербург"]
     
     private let service = Service()
     
@@ -48,23 +48,22 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(updateTable))
         
         // Если массив citiesArray пустой, то заполняем пустыми значениями в соответствии с количеством элементов в citiesNameArray
-        if citiesArray.isEmpty {
-            citiesArray = Array(repeating: defaultCity, count: citiesNameArray.count)
-        }
+        fillCitiesArray()
         addCities()
         setupViews()
         setupConstraints()
     }
     
     // Метод который вызывается при нажатии на кнопку "+" для добавления нового города в главный список
-    @objc func addNewCity() {
+    @objc
+    private func addNewCity() {
         let addCityViewController = AddCityViewController()
         addCityViewController.delegate = self
         show(addCityViewController, sender: self)
     }
     
     
-    func addCities() {
+    private func addCities() {
         service.getCityWeather(citiesArray: self.citiesNameArray) { (index, weather) in
             citiesArray[index] = weather
             citiesArray[index].name = self.citiesNameArray[index]
@@ -72,14 +71,21 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
         }
     }
     
-    @objc func updateTable(changeDataLoadedTo: Bool) {
+    private func fillCitiesArray() {
+        if citiesArray.isEmpty {
+            citiesArray = Array(repeating: defaultCity, count: citiesNameArray.count)
+        }
+    }
+    
+    @objc
+    private func updateTable(changeDataLoadedTo: Bool) {
         DispatchQueue.main.async {
             self.isDataLoaded = changeDataLoadedTo
             self.tableView.reloadData()
         }
     }
     
-    func setupViews() {
+    private func setupViews() {
         title = "Прогноз погоды"
         tableView.dataSource = self
         tableView.delegate = self
@@ -89,7 +95,7 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
         view.addSubview(tableView)
     }
         
-    func setupConstraints() {
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
@@ -98,6 +104,8 @@ class RootViewController: UIViewController, UINavigationControllerDelegate, AddC
         ])
     }
 }
+
+// MARK: - UITableViewDataSource
 
 extension RootViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -124,6 +132,8 @@ extension RootViewController: UITableViewDataSource {
     }
     
 }
+
+// MARK: - UITableViewDelegate
 
 extension RootViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

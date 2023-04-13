@@ -5,8 +5,8 @@
 //  Created by Айсен Еремеев on 04.04.2023.
 //
 
-import Foundation
 import CoreLocation
+import Foundation
 import SVGKit
 import UIKit
 
@@ -17,16 +17,16 @@ final class Service {
     
     // Делегает основного вьюконтроллера
     weak var delegate: RootViewController?
-    // Объявляем индикатор загрузки
-    let activityIndicator = UIActivityIndicatorView()
-    
+
     // Метод для перебора массива с названиями городов citiesNameArray
     func getCityWeather(citiesArray: [String], completionHandler: @escaping (Int, WeatherData) -> Void) {
         // берем его индекс и его название
         for (index, item) in citiesArray.enumerated() {
             // При помощи метода getCityCoordinates по его названию item, получаем его координаты
             getCityCoordinates(city: item, completion: { (coordinate, error) in
-                guard let coordinate = coordinate, error == nil else { return }
+                guard let coordinate = coordinate, error == nil else {
+                    return
+                }
                 // при помощи метода updateData скачиваем данные по полученным координатам
                 self.updateData(latitude: coordinate.latitude, longitude: coordinate.longitude) { (weather) in
                     // Полученные данные при помощи замыкания передаем в модель данных WeatherData
@@ -47,7 +47,6 @@ final class Service {
     func updateData(latitude: Double, longitude: Double, completionHandler: @escaping (WeatherData) -> Void) {
         // Если токен не пустой то продолжаем
         guard !token.isEmpty else {
-            print("Token пустой")
             return
         }
         // Собираем строку для ссылки
@@ -57,11 +56,12 @@ final class Service {
             URLQueryItem(name: "lon", value: "\(longitude)"),
             URLQueryItem(name: "extra", value: "true"),
         ]
-        // Если ссылка сформирована продолжаем
-        guard let url = components?.url else { return }
-        print(url)
+        // Если ссылка сформирована продолжаем.
+        guard let URL = components?.url else {
+            return
+        }
         // Формируем запрос из ссылки
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: URL)
         // В соответствии с документацией Яндекс API добавляем к токену значение для хидера
         request.setValue("\(token)", forHTTPHeaderField: "X-Yandex-API-Key")
         // Создаем таску
@@ -77,7 +77,9 @@ final class Service {
                 // Сохраняем декодированные данные в переменную apiData
                 let apiData = try JSONDecoder().decode(ApiResponse.self, from: data)
                 // Если полученные данные соответствуют модели WeatherData продолжаем
-                guard let weather = WeatherData(apiResponse: apiData) else { return }
+                guard let weather = WeatherData(apiResponse: apiData) else {
+                    return
+                }
                 // Передаем данные в модель WeatherData
                 completionHandler(weather)
             }

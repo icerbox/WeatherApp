@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol AddCityViewControllerDelegate: AnyObject {
-    func addCityViewControllerDidCancel(_ controller: AddCityViewController)
-    func addCityViewController(_ controller: AddCityViewController, didFinishAdding item: String)
+protocol CityAppender: AnyObject {
+    func cancelButtonTap(_ controller: AddCityViewController)
+    func doneButtonTap(_ controller: AddCityViewController, didFinishAdding item: String)
 }
 
-class AddCityViewController: UIViewController {
+final class AddCityViewController: UIViewController {
     
-    weak var delegate: AddCityViewControllerDelegate?
+    weak var delegate: CityAppender?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,13 +36,13 @@ class AddCityViewController: UIViewController {
         return textField
     }()
     
-    func setupViews() {
+    private func setupViews() {
         view.backgroundColor = .white
         view.addSubview(cityName)
         view.addSubview(doneButton)
         view.addSubview(cancelButton)
     }
-    func setupConstraints() {
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             cityName.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             cityName.safeAreaLayoutGuide.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50),
@@ -59,11 +59,16 @@ class AddCityViewController: UIViewController {
         ])
     }
     
-    @objc func done(_ sender: UIButton) {
-        guard let item = cityName.text else { return }
-        delegate?.addCityViewController(self, didFinishAdding: item)
+    @objc
+    private func done(_ sender: UIButton) {
+        guard let item = cityName.text else {
+            return
+        }
+        delegate?.doneButtonTap(self, didFinishAdding: item)
         
-        guard let viewControllers = self.navigationController?.viewControllers else { return }
+        guard let viewControllers = self.navigationController?.viewControllers else {
+            return
+        }
         
         for viewController in viewControllers {
             if viewController is RootViewController {
@@ -73,8 +78,9 @@ class AddCityViewController: UIViewController {
         }
     }
     
-    @objc func cancel(_ sender: UIButton) {
-        delegate?.addCityViewControllerDidCancel(self)
+    @objc
+    private func cancel(_ sender: UIButton) {
+        delegate?.cancelButtonTap(self)
         self.navigationController?.popViewController(animated: true)
     }
 }

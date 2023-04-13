@@ -73,6 +73,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D0393D4C29E77EF700EF4FA3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D0DE4A0029E4EFD3001A6F84 /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D0393D4D29E77F4400EF4FA3 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D0FEA51229DC679900F2F521 /* Service.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		D0A253A829DBB7E100A1E135 = {
 			isa = PBXGroup;
 			children = (
@@ -94,9 +110,11 @@
 		D0A253B329DBB7E100A1E135 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				D0FEA51729DD33FD00F2F521 /* ViewControllers */,
-				D0FEA51429DC69AC00F2F521 /* Model */,
 				D0A253B429DBB7E100A1E135 /* AppDelegate.swift */,
+				D0FEA51729DD33FD00F2F521 /* ViewControllers */,
+				D0FEA51429DC69AC00F2F521 /* Models */,
+				D0393D4C29E77EF700EF4FA3 /* Extensions */,
+				D0393D4D29E77F4400EF4FA3 /* Services */,
 				D0A253BD29DBB7E400A1E135 /* Assets.xcassets */,
 				D0A253BF29DBB7E400A1E135 /* LaunchScreen.storyboard */,
 				D0A253C229DBB7E400A1E135 /* Info.plist */,
@@ -104,18 +122,16 @@
 			path = WeatherApp;
 			sourceTree = "<group>";
 		};
-		D0FEA51429DC69AC00F2F521 /* Model */ = {
+		D0FEA51429DC69AC00F2F521 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				D0FEA51529DC719600F2F521 /* WeatherData.swift */,
 				D0FEA50E29DBCA4A00F2F521 /* ApiResponse.swift */,
+				D0DE49FE29E4EC06001A6F84 /* ViewMetrics.swift */,
 				D0FEA50C29DBC8DE00F2F521 /* CitiesListTableViewCell.swift */,
 				D011949829DEB7E0003646E4 /* DetailTableViewCell.swift */,
-				D0DE49FE29E4EC06001A6F84 /* ViewMetrics.swift */,
-				D0DE4A0029E4EFD3001A6F84 /* Extensions.swift */,
-				D0FEA51229DC679900F2F521 /* Service.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		D0FEA51729DD33FD00F2F521 /* ViewControllers */ = {
@@ -140,6 +156,7 @@
 				D0A253AE29DBB7E100A1E135 /* Frameworks */,
 				D0A253AF29DBB7E100A1E135 /* Resources */,
 				DFDFF6C683BB4BF6FE42ABAD /* [CP] Embed Pods Frameworks */,
+				D0393D4E29E7867500EF4FA3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -217,6 +234,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		D0393D4E29E7867500EF4FA3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\nset -e\n\ndefaults write com.apple.dt.Xcode DVTTextEditorTrimTrailingWhitespace -bool YES\ndefaults write com.apple.dt.Xcode DVTTextEditorTrimWhitespaceOnlyLines -bool YES\n\ndefaults write com.apple.dt.Xcode DVTTextIndentTabWidth -int 4\ndefaults write com.apple.dt.Xcode DVTTextIndentWidth -int 4\n\ndefaults write com.apple.dt.Xcode DVTTextPageGuideLocation -int 120\n\necho \"Script started\"\n";
 		};
 		DFDFF6C683BB4BF6FE42ABAD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

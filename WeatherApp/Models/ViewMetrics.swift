@@ -12,6 +12,9 @@ struct ViewMetrics {
     
     // Отступы
     static let cellSpacing: Int = 10
+
+    // Верхние и нижние отступы для стеквью
+    static let defaultAnchor: CGFloat = 8
     
     // Углы элементов
     static let cornerRadius: CGFloat = 10
@@ -21,4 +24,10 @@ struct ViewMetrics {
     
     // Параметр для ширины и высоты иконок
     static let iconsScale: CGFloat = 30
+    
+    // Высота middleViewStack
+    static let mediumViewStackHeight: CGFloat = 200
+
+    // Высота bottomViewStack
+    static let bottomViewStackHeight: CGFloat = 120
 }
